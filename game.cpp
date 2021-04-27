@@ -12,7 +12,7 @@ Game::Game(QWidget *parent)
 {
     ui->setupUi(this);
 
-        ui->pushButton_2->setDisabled(true);
+       ui->pushButton_2->setDisabled(true);
        ui->jr1->setPlaceholderText("Taper nom joueur 1");
        ui->jr2->setPlaceholderText("Taper nom joueur 2");
 
@@ -247,10 +247,20 @@ qDebug()<<p2.getHand().getHandPlayer().size();
 void Game::on_pushButton_clicked()
 {
 
-    son1->play();
+
    QString fontTemplate = tr("<font color='%1'>%2</font>");
-   ui->j1->setText(fontTemplate.arg("white",ui->jr1->toPlainText()));
-   ui->j2->setText(fontTemplate.arg("white",ui->jr2->toPlainText()));
+
+
+   if(ui->jr1->toPlainText() =="" || ui->jr2->toPlainText()=="")
+   {
+       QMessageBox::about(this,"ERREUR","Veuillez entrer vos noms");
+
+   }
+else
+   {
+       ui->j1->setText(fontTemplate.arg("white",ui->jr1->toPlainText()));
+       ui->j2->setText(fontTemplate.arg("white",ui->jr2->toPlainText()));
+       son1->play();
    p1.setPrenom(ui->jr1->toPlainText());
    p2.setPrenom(ui->jr2->toPlainText());
 
@@ -264,7 +274,7 @@ void Game::on_pushButton_clicked()
     p2.setHand(h2);
     ui->pushButton_2->setDisabled(false);
     ui->pushButton->setDisabled(true);
-
+}
 
 }
 
@@ -272,5 +282,17 @@ void Game::on_pushButton_3_clicked()
 {
    qApp->quit();
    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+}
+
+
+void Game::on_mute_clicked()
+{
+    son1->stop();
+}
+
+
+void Game::on_pushButton_4_clicked()
+{
+    son1->play();
 }
 

@@ -34,6 +34,10 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_mute_clicked();
+
+    void on_pushButton_4_clicked();
+
 private:
     Ui::Game *ui;
     Player p1,p2;
