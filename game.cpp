@@ -1,15 +1,25 @@
 #include "game.h"
 #include "ui_game.h"
 #include<package.h>
+#include<QTimer>
+#include<QDateTime>
+
+
+
 Game::Game(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Game)
 {
     ui->setupUi(this);
-    QSound(":/sons/b.wav").play();
+
         ui->pushButton_2->setDisabled(true);
        ui->jr1->setPlaceholderText("Taper nom joueur 1");
        ui->jr2->setPlaceholderText("Taper nom joueur 2");
+
+        son=new QSound(":/sound/b.wav");
+        son1=new QSound(":/sound/a.wav");
+
+
 }
 
 Game::~Game()
@@ -18,9 +28,15 @@ Game::~Game()
 }
 
 
+
+
+
 int Game::index = 1;
 void Game::on_pushButton_2_clicked()
 {
+
+
+
        ui->resultatB->setText("") ;
        Hand h1=p1.getHand();
        Hand h2=p2.getHand();
@@ -64,14 +80,14 @@ QString formatT1=tr("<font color='%1'>%2<\font>");
        if (ct1.comparer(ct2) == 1) // premier joueur remporte la manche
                    {
                        h1.setHandPlayer(aux);
-                       ui->Resultat->setText(p1.getPrenom()+" a emportÃ© cette manche");
+                       ui->Resultat->setText(p1.getPrenom()+" a emporté cette manche");
                        index++;
                    }
 
       else if (ct1.comparer(ct2) ==2) // 2Ã©me joueur remporte la manche
                    {
                        h2.setHandPlayer(aux);
-                       ui->Resultat->setText(p2.getPrenom()+" a emportÃ© cette manche");
+                       ui->Resultat->setText(p2.getPrenom()+" a emporté cette manche");
                        index++;
                    }
        else
@@ -118,8 +134,8 @@ QString formatT1=tr("<font color='%1'>%2<\font>");
                            aux.push(ct3);
                            aux.push(ct4);
 
-                           ui->cartejoueur1->setText(ui->cartejoueur1->text()+formatT1.arg("white","**"));
-                           ui->cartejoueur2->setText(ui->cartejoueur2->text()+formatT1.arg("white","**"));
+                           ui->cartejoueur1->setText(ui->cartejoueur1->text()+formatT1.arg("red","*")+formatT1.arg("black","*"));
+                           ui->cartejoueur2->setText(ui->cartejoueur2->text()+formatT1.arg("black","*")+formatT1.arg("red","*"));
 
 
                            // si un de joueurs ne possede plus de carte
@@ -211,13 +227,16 @@ QString formatT1=tr("<font color='%1'>%2<\font>");
        if(p1.getHand().getHandPlayer().size()==0) {
            ui->pushButton_2->setDisabled(true);
            QMessageBox::about(this,"Gagnant",p2.getPrenom()+" a gangné");
+           son->play();
 
 
        }
        if(p2.getHand().getHandPlayer().size()==0) {
            ui->pushButton_2->setDisabled(true);
            QMessageBox::about(this,"Gagnant",p1.getPrenom()+" a gangné");
+           son->play();
        }
+
 qDebug()<<p1.getHand().getHandPlayer().size();
 qDebug()<<p2.getHand().getHandPlayer().size();
 
@@ -228,7 +247,7 @@ qDebug()<<p2.getHand().getHandPlayer().size();
 void Game::on_pushButton_clicked()
 {
 
-
+    son1->play();
    QString fontTemplate = tr("<font color='%1'>%2</font>");
    ui->j1->setText(fontTemplate.arg("white",ui->jr1->toPlainText()));
    ui->j2->setText(fontTemplate.arg("white",ui->jr2->toPlainText()));

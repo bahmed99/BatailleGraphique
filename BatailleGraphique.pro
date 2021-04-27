@@ -1,6 +1,7 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia
+
 
 CONFIG += c++11
 
@@ -26,7 +27,7 @@ HEADERS += \
 FORMS += \
     game.ui
 
-QT += multimedia
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -37,4 +38,5 @@ RESOURCES += \
     resources.qrc
 OTHER_FILES += \
     images/1.ico \
-    sons/b.wav
+    sound/b.wav \
+    sound/a.wav

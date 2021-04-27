@@ -1,6 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
         <file>images/1.ico</file>
+		<file prefix="/sound">sound/b.wav</file>
+		<file prefix="/sound">sound/a.wav</file>
 		
     </qresource>
 </RCC>

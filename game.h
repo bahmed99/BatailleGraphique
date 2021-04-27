@@ -30,7 +30,6 @@ private slots:
     void on_pushButton_2_clicked();
 
 
-
     void on_pushButton_clicked();
 
     void on_pushButton_3_clicked();
@@ -39,7 +38,7 @@ private:
     Ui::Game *ui;
     Player p1,p2;
     static int index ;
-    QSound *son;
+    QSound *son,*son1;
 
 };
 #endif // GAME_H

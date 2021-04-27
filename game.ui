@@ -1634,19 +1634,6 @@ p, li { white-space: pre-wrap; }
      <string>Redemarer</string>
     </property>
    </widget>
-   <widget class="QLabel" name="timer1">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>100</y>
-      <width>47</width>
-      <height>13</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
