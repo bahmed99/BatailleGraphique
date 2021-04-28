@@ -38,11 +38,17 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void affichage(Card c1,Card c2, int i );
+
+
+
 private:
     Ui::Game *ui;
     Player p1,p2;
     static int index ;
     QSound *son,*son1;
+
+
 
 };
 #endif // GAME_H

@@ -3,18 +3,24 @@
 #include<package.h>
 #include<QTimer>
 #include<QDateTime>
-
+#include<QPainter>
 
 
 Game::Game(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Game)
 {
-    ui->setupUi(this);
 
-       ui->pushButton_2->setDisabled(true);
-       ui->jr1->setPlaceholderText("Taper nom joueur 1");
-       ui->jr2->setPlaceholderText("Taper nom joueur 2");
+        setFixedSize(836,662);
+        ui->setupUi(this);
+
+
+
+
+
+        ui->pushButton_2->setDisabled(true);
+        ui->jr1->setPlaceholderText("Taper nom joueur 1");
+        ui->jr2->setPlaceholderText("Taper nom joueur 2");
 
         son=new QSound(":/sound/b.wav");
         son1=new QSound(":/sound/a.wav");
@@ -35,19 +41,18 @@ int Game::index = 1;
 void Game::on_pushButton_2_clicked()
 {
 
-
-
        ui->resultatB->setText("") ;
        Hand h1=p1.getHand();
        Hand h2=p2.getHand();
        Card ct1,ct2;
        stack<Card> aux;
        bool testBataille = false;
+       int i=0;
 
 
 
-QString formatT=tr("<font color='%1'>%2<\font><br>");
-QString formatT1=tr("<font color='%1'>%2<\font>");
+        QString formatT=tr("<font color='%1'>%2<\font><br>");
+        QString formatT1=tr("<font color='%1'>%2<\font>");
 
        ui->Round->setText(QString::number(index));
        ct1 = h1.getHandPlayer().top();
@@ -57,23 +62,9 @@ QString formatT1=tr("<font color='%1'>%2<\font>");
        aux.push(ct1);
        aux.push(ct2);
 
-       if(ct1.getSymbole()=="♥" || ct1.getSymbole()=="♦")
-       {
-           ui->cartejoueur1->setText(formatT1.arg("red",QString::number(ct1.getValeur()))+formatT.arg("red",ct1.getSymbole()));
-       }
-       else {
-           ui->cartejoueur1->setText(QString::number(ct1.getValeur())+ct1.getSymbole()+"<br>");
-       }
 
-        if(ct2.getSymbole()=="♥" || ct2.getSymbole()=="♦"){
-       ui->cartejoueur2->setText(formatT1.arg("red",QString::number(ct2.getValeur()))+formatT.arg("red",ct2.getSymbole()));
-   }
-       else
-   {
-       ui->cartejoueur2->setText(QString::number(ct2.getValeur())+ct2.getSymbole()+"<br>");
-   }
-
-
+       affichage(ct1,ct2,i);
+       i++;
 
 
 
@@ -134,8 +125,26 @@ QString formatT1=tr("<font color='%1'>%2<\font>");
                            aux.push(ct3);
                            aux.push(ct4);
 
-                           ui->cartejoueur1->setText(ui->cartejoueur1->text()+formatT1.arg("red","*")+formatT1.arg("black","*"));
-                           ui->cartejoueur2->setText(ui->cartejoueur2->text()+formatT1.arg("black","*")+formatT1.arg("red","*"));
+                           i++;
+                           const QPixmap* pixmap1 = ui->cartejoueur1->pixmap();
+                           const QPixmap* pixmap2 = ui->cartejoueur2->pixmap();
+
+                           QPixmap *pixmap=new QPixmap(71, 96*(i));
+                           pixmap->fill(Qt::transparent);
+                           QPainter *painter=new QPainter(pixmap);
+                           painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                           painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/e.gif"));
+                           painter->end();
+                           ui->cartejoueur1->setPixmap(*pixmap);
+
+
+                           QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                           pixmap3->fill(Qt::transparent);
+                           QPainter *painter1 = new QPainter(pixmap3);
+                           painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                           painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/e.gif"));
+                           painter1->end();
+                           ui->cartejoueur2->setPixmap(*pixmap3);
 
 
                            // si un de joueurs ne possede plus de carte
@@ -165,24 +174,8 @@ QString formatT1=tr("<font color='%1'>%2<\font>");
                                aux.push(ct5);
                                aux.push(ct6);
 
-
-
-                               if(ct5.getSymbole()=="♥" || ct5.getSymbole()=="♦")
-                               {
-                                   ui->cartejoueur1->setText(ui->cartejoueur1->text()+"<br>"+formatT1.arg("red",QString::number(ct5.getValeur()))+formatT.arg("red",ct5.getSymbole()) +"<br>");
-                               }
-                               else {
-                                   ui->cartejoueur1->setText(ui->cartejoueur1->text()+"<br>"+formatT1.arg("black",QString::number(ct5.getValeur()))+formatT1.arg("black",ct5.getSymbole())+"<br>");
-                               }
-
-                                if(ct6.getSymbole()=="♥" || ct6.getSymbole()=="♦")
-                                {
-                               ui->cartejoueur2->setText(ui->cartejoueur2->text()+"<br>"+formatT1.arg("red",QString::number(ct6.getValeur()))+formatT.arg("red",ct6.getSymbole())+"<br>");
-                           }
-                               else
-                           {
-                               ui->cartejoueur2->setText(ui->cartejoueur2->text()+"<br>"+formatT1.arg("black",QString::number(ct6.getValeur()))+formatT1.arg("black",ct6.getSymbole())+"<br>");
-                           }
+                                i++;
+                            affichage(ct5,ct6,i);
 
 
 
@@ -258,22 +251,24 @@ void Game::on_pushButton_clicked()
    }
 else
    {
+
+
        ui->j1->setText(fontTemplate.arg("white",ui->jr1->toPlainText()));
        ui->j2->setText(fontTemplate.arg("white",ui->jr2->toPlainText()));
        son1->play();
-   p1.setPrenom(ui->jr1->toPlainText());
-   p2.setPrenom(ui->jr2->toPlainText());
+       p1.setPrenom(ui->jr1->toPlainText());
+       p2.setPrenom(ui->jr2->toPlainText());
 
-   ui->jr1->deleteLater();
-   ui->jr2->deleteLater();
+       ui->jr1->deleteLater();
+       ui->jr2->deleteLater();
 
-    Package pq;
-    Hand h1,h2;
-    pq.distribuer(h1,h2);
-    p1.setHand(h1);
-    p2.setHand(h2);
-    ui->pushButton_2->setDisabled(false);
-    ui->pushButton->setDisabled(true);
+        Package pq;
+        Hand h1,h2;
+        pq.distribuer(h1,h2);
+        p1.setHand(h1);
+        p2.setHand(h2);
+        ui->pushButton_2->setDisabled(false);
+        ui->pushButton->setDisabled(true);
 }
 
 }
@@ -295,4 +290,566 @@ void Game::on_pushButton_4_clicked()
 {
     son1->play();
 }
+
+void Game::affichage(Card c1,Card c2,int i)
+{
+    const QPixmap* pixmap1 = ui->cartejoueur1->pixmap();
+    const QPixmap* pixmap2 = ui->cartejoueur2->pixmap();
+
+
+
+    if(c1.getSymbole()=="♥")
+    {
+
+
+            if(c1.getValeur()==11){
+                if(i==0){
+                ui->cartejoueur1->setPixmap(QPixmap(":/images/Jh"));}
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                    pixmap->fill(Qt::transparent);
+                    QPainter *painter=new QPainter(pixmap);
+                    painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                    painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Jh"));
+                    painter->end();
+                    ui->cartejoueur1->setPixmap(*pixmap);
+
+                }
+            }
+            else if(c1.getValeur()==12){
+                if(i==0){
+                 ui->cartejoueur1->setPixmap(QPixmap(":/images/Qh"));}
+                else{ QPixmap *pixmap=new QPixmap(71, 96*(i));
+                    pixmap->fill(Qt::transparent);
+                    QPainter *painter=new QPainter(pixmap);
+                    painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                    painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Qh"));
+                    painter->end();
+                    ui->cartejoueur1->setPixmap(*pixmap);}
+
+            }
+            else if(c1.getValeur()==13){
+                if(i==0)
+                {ui->cartejoueur1->setPixmap(QPixmap(":/images/Kh"));}
+                else { QPixmap *pixmap=new QPixmap(71, 96*(i));
+                    pixmap->fill(Qt::transparent);
+                    QPainter *painter=new QPainter(pixmap);
+                    painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                    painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Kh"));
+                    painter->end();
+                    ui->cartejoueur1->setPixmap(*pixmap);}
+            }
+           else
+            {
+                if(i==0)
+                {ui->cartejoueur1->setPixmap(QPixmap(":/images/"+QString::number(c1.getValeur())+"h"));}
+                else { QPixmap *pixmap=new QPixmap(71, 96*(i));
+                    pixmap->fill(Qt::transparent);
+                    QPainter *painter=new QPainter(pixmap);
+                    painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                    painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c1.getValeur())+"h"));
+                    painter->end();
+                    ui->cartejoueur1->setPixmap(*pixmap);}            }
+
+
+    }
+    if(c1.getSymbole()=="♦")
+    {
+
+
+            if(c1.getValeur()==11){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Jd.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c1.getValeur())+"h"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+            else if(c1.getValeur()==12){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Qd.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Qd.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+
+            }
+            else if(c1.getValeur()==13){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Kd.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Kd.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+           else
+            {if(i==0)
+
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/"+QString::number(c1.getValeur())+"d.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c1.getValeur())+"d.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+
+
+
+    }
+    if(c1.getSymbole()=="♣")
+    {
+
+
+            if(c1.getValeur()==11){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Jc.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Jc.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+            else if(c1.getValeur()==12){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Qc.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Qc.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+
+            }
+            else if(c1.getValeur()==13){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Kc.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Kc.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+           else
+            {
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/"+QString::number(c1.getValeur())+"c.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c1.getValeur())+"c.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+
+
+    }
+    if(c1.getSymbole()=="♠")
+    {
+
+
+            if(c1.getValeur()==11){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Js.gif"));
+                }
+
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Js.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+            else if(c1.getValeur()==12){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Qs.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Qs.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+
+            }
+            else if(c1.getValeur()==13){
+                if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/Ks.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Ks.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+           else
+            {if(i==0)
+                {
+                    ui->cartejoueur1->setPixmap(QPixmap(":/images/"+QString::number(c1.getValeur())+"s.gif"));
+                }
+                else {
+                    QPixmap *pixmap=new QPixmap(71, 96*(i));
+                                        pixmap->fill(Qt::transparent);
+                                        QPainter *painter=new QPainter(pixmap);
+                                        painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c1.getValeur())+"s.gif"));
+                                        painter->end();
+                                        ui->cartejoueur1->setPixmap(*pixmap);
+                }
+            }
+    }
+
+    if(c2.getSymbole()=="♥")
+    {
+
+
+            if(c2.getValeur()==11){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Jh"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Jh"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+            else if(c2.getValeur()==12){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Qh"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Qh"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+
+            }
+            else if(c2.getValeur()==13){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Kh"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Kh"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+           else
+            {if(i==0)
+
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/"+QString::number(c2.getValeur())+"h"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c2.getValeur())+"h"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+
+
+    }
+    if(c2.getSymbole()=="♦")
+    {
+
+
+            if(c2.getValeur()==11){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Jd.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Jd.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+            else if(c2.getValeur()==12){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Qd.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Qd.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+
+            }
+            else if(c2.getValeur()==13){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Kd.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Kd.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+           else
+            {
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/"+QString::number(c2.getValeur())+"d.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c2.getValeur())+"d.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+
+
+
+    }
+    if(c2.getSymbole()=="♣")
+    {
+
+
+            if(c2.getValeur()==11){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Jc.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Jc.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+            else if(c2.getValeur()==12){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Qc.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Qc.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+
+            }
+            else if(c2.getValeur()==13){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Kc.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Kc.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+           else
+            {if(i==0)
+
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/"+QString::number(c2.getValeur())+"c.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c2.getValeur())+"c.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+
+
+    }
+    if(c2.getSymbole()=="♠")
+    {
+
+
+            if(c2.getValeur()==11){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Js.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Js.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+            else if(c2.getValeur()==12){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Qs.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Qs.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+
+            }
+            else if(c2.getValeur()==13){
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/Ks.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/Ks.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+           else
+            {
+                if(i==0)
+                {
+                    ui->cartejoueur2->setPixmap(QPixmap(":/images/"+QString::number(c2.getValeur())+"s.gif"));
+                }
+                else {
+                    QPixmap *pixmap3=new QPixmap(71, 96*(i));
+                    pixmap3->fill(Qt::transparent);
+                    QPainter *painter1 = new QPainter(pixmap3);
+                    painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
+                    painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c2.getValeur())+"s.gif"));
+                    painter1->end();
+                    ui->cartejoueur2->setPixmap(*pixmap3);
+                }
+            }
+    }
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
 

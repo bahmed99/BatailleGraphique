@@ -1,8 +1,61 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
         <file>images/1.ico</file>
+		<file>images/Qs.gif</file>
+		<file>images/Qh.gif</file>
+		<file>images/Qd.gif</file>
+		<file>images/Qc.gif</file>
+		<file>images/Ks.gif</file>
+		<file>images/Kh.gif</file>
+		<file>images/Kd.gif</file>
+		<file>images/Kc.gif</file>
+		<file>images/Js.gif</file>
+		<file>images/Jh.gif</file>
+		<file>images/Jd.gif</file>
+		<file>images/Jc.gif</file>
+		<file>images/10s.gif</file>
+		<file>images/10h.gif</file>
+		<file>images/10d.gif</file>
+		<file>images/10c.gif</file>
+		<file>images/9s.gif</file>
+		<file>images/9h.gif</file>
+		<file>images/9d.gif</file>
+		<file>images/9c.gif</file>
+		<file>images/8s.gif</file>
+		<file>images/8h.gif</file>
+		<file>images/8d.gif</file>
+		<file>images/8c.gif</file>
+		<file>images/7s.gif</file>
+		<file>images/7h.gif</file>
+		<file>images/7d.gif</file>
+		<file>images/7c.gif</file>
+		<file>images/6s.gif</file>
+		<file>images/6h.gif</file>
+		<file>images/6d.gif</file>
+		<file>images/6c.gif</file>
+		<file>images/5s.gif</file>
+		<file>images/5h.gif</file>
+		<file>images/5d.gif</file>
+		<file>images/5c.gif</file>
+		<file>images/4s.gif</file>
+		<file>images/4h.gif</file>
+		<file>images/4d.gif</file>
+		<file>images/4c.gif</file>
+		<file>images/3s.gif</file>
+		<file>images/3h.gif</file>
+		<file>images/3d.gif</file>
+		<file>images/3c.gif</file>
+		<file>images/2s.gif</file>
+		<file>images/2h.gif</file>
+		<file>images/2d.gif</file>
+		<file>images/2c.gif</file>
+		<file>images/1s.gif</file>
+		<file>images/1h.gif</file>
+		<file>images/1d.gif</file>
+		<file>images/1c.gif</file>
+		<file>images/e.gif</file>
+		
 		<file prefix="/sound">sound/b.wav</file>
 		<file prefix="/sound">sound/a.wav</file>
-		
     </qresource>
 </RCC>
