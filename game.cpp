@@ -179,7 +179,7 @@ void Game::on_pushButton_2_clicked()
 
 
 
-                           qDebug()<<ui->cartejoueur1->text();
+
 
                                // premier joueur remporte la manche
                                if (ct5.comparer(ct6) == 1)
@@ -220,6 +220,7 @@ void Game::on_pushButton_2_clicked()
        if(p1.getHand().getHandPlayer().size()==0) {
            ui->pushButton_2->setDisabled(true);
            QMessageBox::about(this,"Gagnant",p2.getPrenom()+" a gangné");
+           son1->stop();
            son->play();
 
 
@@ -227,6 +228,7 @@ void Game::on_pushButton_2_clicked()
        if(p2.getHand().getHandPlayer().size()==0) {
            ui->pushButton_2->setDisabled(true);
            QMessageBox::about(this,"Gagnant",p1.getPrenom()+" a gangné");
+           son1->stop();
            son->play();
        }
 
@@ -239,6 +241,7 @@ qDebug()<<p2.getHand().getHandPlayer().size();
 
 void Game::on_pushButton_clicked()
 {
+
 
 
    QString fontTemplate = tr("<font color='%1'>%2</font>");
@@ -262,13 +265,34 @@ else
        ui->jr1->deleteLater();
        ui->jr2->deleteLater();
 
+
+       srand((int)time(0));
         Package pq;
         Hand h1,h2;
-        pq.distribuer(h1,h2);
-        p1.setHand(h1);
+      //  stack<Card> h;
+       /* Card C,C1;
+        C.setSymbole("♥");
+         C.setValeur(5);
+         C1.setSymbole("♥");
+          C1.setValeur(6); */
+
+
+      //  h.push(C);
+     //   h.push(C1);
+      //   h.push(C1);
+      //    h.push(C1);
+        //  h.push(C1);
+       //   h.push(C);
+
+       pq.distribuer(h1,h2);
+       p1.setHand(h1);
         p2.setHand(h2);
+      // p1.getHand().setHandPlayer(h);
+      // p2.getHand().setHandPlayer(h);
+
         ui->pushButton_2->setDisabled(false);
         ui->pushButton->setDisabled(true);
+
 }
 
 }
@@ -290,6 +314,9 @@ void Game::on_pushButton_4_clicked()
 {
     son1->play();
 }
+
+
+
 
 void Game::affichage(Card c1,Card c2,int i)
 {

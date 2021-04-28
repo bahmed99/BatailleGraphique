@@ -510,7 +510,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Tirer Carte(s)</string>
+     <string>Tirer Cartes</string>
     </property>
    </widget>
    <widget class="QLabel" name="j1">
