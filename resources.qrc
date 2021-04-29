@@ -54,6 +54,9 @@
 		<file>images/1d.gif</file>
 		<file>images/1c.gif</file>
 		<file>images/e.gif</file>
+		<file>images/logo.png</file>
+		<file>images/tapis.jpg</file>
+		<file prefix="/sound">sound/f.wav</file>
 		
 		<file prefix="/sound">sound/b.wav</file>
 		<file prefix="/sound">sound/a.wav</file>

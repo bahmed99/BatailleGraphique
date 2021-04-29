@@ -1,9 +1,5 @@
 #include "game.h"
 #include "ui_game.h"
-#include<package.h>
-#include<QTimer>
-#include<QDateTime>
-#include<QPainter>
 
 
 Game::Game(QWidget *parent)
@@ -19,10 +15,13 @@ Game::Game(QWidget *parent)
 
 
         ui->pushButton_2->setDisabled(true);
-        ui->jr1->setPlaceholderText("Taper nom joueur 1");
-        ui->jr2->setPlaceholderText("Taper nom joueur 2");
+        ui->jr1->setPlaceholderText("Taper votre nom pour jouer");
+
 
         son=new QSound(":/sound/b.wav");
+
+        son2=new QSound(":/sound/f.wav");
+
         son1=new QSound(":/sound/a.wav");
 
 
@@ -61,6 +60,8 @@ void Game::on_pushButton_2_clicked()
        h2.tirerCard();
        aux.push(ct1);
        aux.push(ct2);
+
+
 
 
        affichage(ct1,ct2,i);
@@ -217,25 +218,45 @@ void Game::on_pushButton_2_clicked()
        p1.setHand(h1);
        p2.setHand(h2);
 
-       if(p1.getHand().getHandPlayer().size()==0) {
+
+       if(p1.getHand().getHandPlayer().size()==1){ ui->paquet1->setPixmap(QPixmap(":/images/e.gif"));}
+       else if(p2.getHand().getHandPlayer().size()==1){ ui->paquet2->setPixmap(QPixmap(":/images/e.gif"));}
+
+
+
+
+       else if(p1.getHand().getHandPlayer().size()==0) {
+
+
+           ui->paquet1->setPixmap(QPixmap(""));
            ui->pushButton_2->setDisabled(true);
-           QMessageBox::about(this,"Gagnant",p2.getPrenom()+" a gangné");
            son1->stop();
-           son->play();
+           son2->play();
+           QMessageBox::about(this,"Perdu","vous avez perdu");
+
 
 
        }
-       if(p2.getHand().getHandPlayer().size()==0) {
+
+       else if(p2.getHand().getHandPlayer().size()==0) {
+
+
+           ui->paquet2->setPixmap(QPixmap(""));
            ui->pushButton_2->setDisabled(true);
+           son1->stop();
+           son->play();
            QMessageBox::about(this,"Gagnant",p1.getPrenom()+" a gangné");
-           son1->stop();
-           son->play();
+
        }
 
-qDebug()<<p1.getHand().getHandPlayer().size();
-qDebug()<<p2.getHand().getHandPlayer().size();
+
+       ui->score1->setText(QString::number(p1.getHand().getHandPlayer().size()));
+       ui->score2->setText(QString::number(p2.getHand().getHandPlayer().size()));
 
 
+
+        qDebug()<<p1.getHand().getHandPlayer().size();
+        qDebug()<<p2.getHand().getHandPlayer().size();
 }
 
 
@@ -247,9 +268,9 @@ void Game::on_pushButton_clicked()
    QString fontTemplate = tr("<font color='%1'>%2</font>");
 
 
-   if(ui->jr1->toPlainText() =="" || ui->jr2->toPlainText()=="")
+   if(ui->jr1->toPlainText() =="")
    {
-       QMessageBox::about(this,"ERREUR","Veuillez entrer vos noms");
+       QMessageBox::about(this,"ATTENTION","Veuillez entrer votre nom ");
 
    }
 else
@@ -257,13 +278,13 @@ else
 
 
        ui->j1->setText(fontTemplate.arg("white",ui->jr1->toPlainText()));
-       ui->j2->setText(fontTemplate.arg("white",ui->jr2->toPlainText()));
+       ui->j2->setText(fontTemplate.arg("white","Ordinateur"));
        son1->play();
        p1.setPrenom(ui->jr1->toPlainText());
-       p2.setPrenom(ui->jr2->toPlainText());
+       p2.setPrenom("Ordinateur");
 
        ui->jr1->deleteLater();
-       ui->jr2->deleteLater();
+      // ui->jr2->deleteLater();
 
 
        srand((int)time(0));
@@ -290,8 +311,41 @@ else
       // p1.getHand().setHandPlayer(h);
       // p2.getHand().setHandPlayer(h);
 
+
+        ui->paquet1->setPixmap(QPixmap(":/images/e.gif"));
+         ui->paquet2->setPixmap(QPixmap(":/images/e.gif"));
+
+
+
+        const QPixmap* pixmap1 = ui->paquet1->pixmap();
+        const QPixmap* pixmap2 = ui->paquet2->pixmap();
+
+
+        QPixmap *pixmap3=new QPixmap(67, 96*(2));
+        QPixmap *pixmap4=new QPixmap(67, 96*(2));
+
+        pixmap3->fill(Qt::transparent);
+        pixmap4->fill(Qt::transparent);
+
+        QPainter *painter1 = new QPainter(pixmap3);
+        QPainter *painter2 = new QPainter(pixmap4);
+
+        painter1->drawPixmap(0, 0, 67, 96, *pixmap1);
+        painter2->drawPixmap(0, 0, 67, 96, *pixmap2);
+
+        painter1->drawPixmap(0, 3, 67, 96, QPixmap(":/images/e.gif"));
+        painter2->drawPixmap(0, 3, 67, 96, QPixmap(":/images/e.gif"));
+
+        painter1->end();
+        painter2->end();
+
+        ui->paquet1->setPixmap(*pixmap3);
+        ui->paquet2->setPixmap(*pixmap4);
+
         ui->pushButton_2->setDisabled(false);
         ui->pushButton->setDisabled(true);
+        ui->score1->setText("26");
+        ui->score2->setText("26");
 
 }
 
@@ -333,6 +387,7 @@ void Game::affichage(Card c1,Card c2,int i)
                 if(i==0){
                 ui->cartejoueur1->setPixmap(QPixmap(":/images/Jh"));}
                 else {
+
                     QPixmap *pixmap=new QPixmap(71, 96*(i));
                     pixmap->fill(Qt::transparent);
                     QPainter *painter=new QPainter(pixmap);
@@ -874,6 +929,7 @@ void Game::affichage(Card c1,Card c2,int i)
 
 
 }
+
 
 
 

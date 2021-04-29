@@ -9,7 +9,12 @@
 #include<QMessageBox>
 
 #include <QDebug>
-#include<QSound>
+
+#include<package.h>
+
+#include<QDateTime>
+#include<QPainter>
+
 
 
 #include<QProcess>
@@ -40,13 +45,11 @@ private slots:
 
     void affichage(Card c1,Card c2, int i );
 
-
-
 private:
     Ui::Game *ui;
     Player p1,p2;
     static int index ;
-    QSound *son,*son1;
+    QSound *son,*son1,*son2;
 
 
 
