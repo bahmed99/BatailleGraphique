@@ -79,7 +79,7 @@ void Game::on_pushButton_2_clicked()
       else if (ct1.comparer(ct2) ==2) // 2Ã©me joueur remporte la manche
                    {
                        h2.setHandPlayer(aux);
-                       ui->Resultat->setText(p2.getPrenom()+" a emporté cette manche");
+                       ui->Resultat->setText(p1.getPrenom()+" a perdu cette manche");
                        index++;
                    }
        else
@@ -90,10 +90,12 @@ void Game::on_pushButton_2_clicked()
 
                      if (h1.getHandPlayer().size() == 0) {
                                h2.setHandPlayer(aux);
+                               ui->Resultat->setText(p1.getPrenom()+" a perdu cette manche");
 
                            }
                      else {
                                h1.setHandPlayer(aux);
+                               ui->Resultat->setText(p1.getPrenom()+" a emporté cette manche");
 
                            }
                        }
@@ -105,12 +107,14 @@ void Game::on_pushButton_2_clicked()
                                    aux.push(h1.getHandPlayer().top());
                                    h1.tirerCard();
                                    h2.setHandPlayer(aux);
+                                   ui->Resultat->setText(p1.getPrenom()+" a perdu cette manche");
 
                                }
                             else {
                                    aux.push(h2.getHandPlayer().top());
                                    h2.tirerCard();
                                    h1.setHandPlayer(aux);
+                                   ui->Resultat->setText(p1.getPrenom()+" a emporté cette manche");
 
                                }
                        }
@@ -154,7 +158,7 @@ void Game::on_pushButton_2_clicked()
                                if (h1.getHandPlayer().size() == 0)
                                {
                                    h2.setHandPlayer(aux);
-                                   ui->Resultat->setText(p2.getPrenom()+" a emporté cette manche");
+                                   ui->Resultat->setText(p1.getPrenom()+" a perdu cette manche");
                                    testBataille = true;
                                }
                                else
@@ -162,6 +166,7 @@ void Game::on_pushButton_2_clicked()
                                    h1.setHandPlayer(aux);
                                    ui->Resultat->setText(p1.getPrenom()+" a emporté cette manche");
                                    testBataille = true;
+
                                }
                            }
 
@@ -196,7 +201,7 @@ void Game::on_pushButton_2_clicked()
                                // 2éme joueur remporte la manche
                                else if (ct5.comparer(ct6) == 2) {
                                    h2.setHandPlayer(aux);
-                                   ui->Resultat->setText(p2.getPrenom()+" a emporté cette manche");
+                                   ui->Resultat->setText(p1.getPrenom()+" a perdu cette manche");
                                    index++;
 
                                    testBataille = true;
