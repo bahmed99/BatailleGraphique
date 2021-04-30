@@ -470,9 +470,9 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>60</y>
+      <y>62</y>
       <width>75</width>
-      <height>23</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -498,19 +498,23 @@
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>160</y>
+      <y>80</y>
       <width>101</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <pointsize>10</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"> </string>
+     <string notr="true">border: 3px solid grey;
+border-radius: 20% ;
+color: white;
+</string>
     </property>
     <property name="text">
      <string>Tirer Cartes</string>
@@ -520,9 +524,9 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>220</y>
+      <y>190</y>
       <width>141</width>
-      <height>61</height>
+      <height>55</height>
      </rect>
     </property>
     <property name="font">
@@ -544,10 +548,10 @@
    <widget class="QLabel" name="j2">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>220</y>
+      <x>500</x>
+      <y>190</y>
       <width>141</width>
-      <height>61</height>
+      <height>55</height>
      </rect>
     </property>
     <property name="font">
@@ -573,7 +577,7 @@
     <property name="geometry">
      <rect>
       <x>160</x>
-      <y>280</y>
+      <y>260</y>
       <width>191</width>
       <height>341</height>
      </rect>
@@ -1038,8 +1042,8 @@
    <widget class="QLabel" name="cartejoueur2">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>280</y>
+      <x>480</x>
+      <y>260</y>
       <width>191</width>
       <height>341</height>
      </rect>
@@ -1492,7 +1496,8 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">  background: rgba(0,0,0,0.01);</string>
+     <string notr="true">  background: rgba(0,0,0,0.01);
+</string>
     </property>
     <property name="text">
      <string/>
@@ -1596,11 +1601,13 @@
       <x>540</x>
       <y>80</y>
       <width>151</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">  background: rgba(0,0,0,0.01);</string>
+     <string notr="true">  background: rgba(0,0,0,0.01);
+border:2px solid white;
+border-radius: 6%</string>
     </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1662,7 +1669,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>710</x>
-      <y>310</y>
+      <y>340</y>
       <width>71</width>
       <height>100</height>
      </rect>
@@ -1681,7 +1688,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>310</y>
+      <y>340</y>
       <width>71</width>
       <height>100</height>
      </rect>
@@ -1700,7 +1707,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>430</y>
+      <y>450</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -1713,7 +1720,8 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">  background: rgba(0,0,0,0.01);color : white;</string>
+     <string notr="true">  background: rgba(0,0,0,0.01);color : white;
+</string>
     </property>
     <property name="text">
      <string/>
@@ -1726,7 +1734,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>430</y>
+      <y>450</y>
       <width>51</width>
       <height>41</height>
      </rect>

@@ -10,7 +10,14 @@ Game::Game(QWidget *parent)
         setFixedSize(836,662);
         ui->setupUi(this);
 
-
+        QString cs1="QPushButton {"
+                       "border: 3px solid grey;"
+                       "border-radius: 20%;"
+                     "}"
+                     "QPushButton:hover {"
+                          "border: 3px solid black;"
+                     "}";
+        ui->pushButton_2->setStyleSheet(cs1);
 
 
 
@@ -47,6 +54,13 @@ void Game::on_pushButton_2_clicked()
        stack<Card> aux;
        bool testBataille = false;
        int i=0;
+
+       QString style="QLabel {"
+                              "border: 1px solid grey;"
+                              "border-radius: 20%;"
+                            "}"
+                            ;
+               ui->Resultat->setStyleSheet(style);
 
 
 
@@ -280,7 +294,13 @@ void Game::on_pushButton_clicked()
    }
 else
    {
-
+       QString style="QLabel {"
+                              "border: 2px solid grey;"
+                              "border-radius: 20%;"
+                            "}"
+                            ;
+               ui->j1->setStyleSheet(style);
+               ui->j2->setStyleSheet(style);
 
        ui->j1->setText(fontTemplate.arg("white",ui->jr1->toPlainText()));
        ui->j2->setText(fontTemplate.arg("white","Ordinateur"));
