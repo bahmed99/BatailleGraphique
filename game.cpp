@@ -152,7 +152,7 @@ void Game::on_pushButton_2_clicked()
                            pixmap->fill(Qt::transparent);
                            QPainter *painter=new QPainter(pixmap);
                            painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
-                           painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/e.gif"));
+                           painter->drawPixmap(0, 15*i, 71, 96, QPixmap(":/images/e.gif"));
                            painter->end();
                            ui->cartejoueur1->setPixmap(*pixmap);
 
@@ -161,7 +161,7 @@ void Game::on_pushButton_2_clicked()
                            pixmap3->fill(Qt::transparent);
                            QPainter *painter1 = new QPainter(pixmap3);
                            painter1->drawPixmap(0, 0, 71, 96*(i-1), *pixmap2);
-                           painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/e.gif"));
+                           painter1->drawPixmap(0, 15*i, 71, 96, QPixmap(":/images/e.gif"));
                            painter1->end();
                            ui->cartejoueur2->setPixmap(*pixmap3);
 
