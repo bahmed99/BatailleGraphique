@@ -32,16 +32,16 @@ public:
     ~Game();
 
 private slots:
-    void on_pushButton_2_clicked();
+    void on_jouer_clicked();
 
 
-    void on_pushButton_clicked();
+    void on_tirer_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_redemarer_clicked();
 
     void on_mute_clicked();
 
-    void on_pushButton_4_clicked();
+    void on_playMusic_clicked();
 
     void affichage(Card c1,Card c2, int i );
 
