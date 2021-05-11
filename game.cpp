@@ -43,7 +43,7 @@ Game::~Game()
 
 
 
-int Game::index = 1;
+
 void Game::on_tirer_clicked()
 {
 
@@ -357,6 +357,7 @@ else
         ui->jouer->setDisabled(true);
         ui->score1->setText("26");
         ui->score2->setText("26");
+        index=1;
 
 }
 

@@ -32,23 +32,22 @@ public:
     ~Game();
 
 private slots:
-    void on_jouer_clicked();
+    void on_jouer_clicked(); // lancer le jeux
 
+    void on_tirer_clicked(); // tirer une carte
 
-    void on_tirer_clicked();
+    void on_redemarer_clicked(); // redemarer window
 
-    void on_redemarer_clicked();
+    void on_mute_clicked(); // couper la musique
 
-    void on_mute_clicked();
+    void on_playMusic_clicked(); //lancer la musique
 
-    void on_playMusic_clicked();
-
-    void affichage(Card c1,Card c2, int i );
+    void affichage(Card c1,Card c2, int i ); // affichage des cartes
 
 private:
     Ui::Game *ui;
     Player p1,p2;
-    static int index ;
+    int index ; // indique le numéro de la manche
     QSound *son,*son1,*son2;
 
 
