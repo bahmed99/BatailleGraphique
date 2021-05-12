@@ -1630,7 +1630,7 @@ p, li { white-space: pre-wrap; }
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>Redemarer</string>
+     <string>Redemarrer</string>
     </property>
    </widget>
    <widget class="QPushButton" name="mute">

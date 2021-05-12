@@ -39,11 +39,7 @@ Game::~Game()
     delete ui;
 }
 
-
-
-
-
-
+// Tirer des cartes
 void Game::on_tirer_clicked()
 {
 
@@ -145,6 +141,9 @@ void Game::on_tirer_clicked()
                            aux.push(ct4);
 
                            i++;
+
+                           /*  Affichage carte a face cachée*/
+
                            const QPixmap* pixmap1 = ui->cartejoueur1->pixmap();
                            const QPixmap* pixmap2 = ui->cartejoueur2->pixmap();
 
@@ -164,6 +163,9 @@ void Game::on_tirer_clicked()
                            painter1->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/e.gif"));
                            painter1->end();
                            ui->cartejoueur2->setPixmap(*pixmap3);
+
+
+
 
 
                            // si un de joueurs ne possede plus de carte
@@ -279,6 +281,7 @@ void Game::on_tirer_clicked()
 }
 
 
+//Lancer la partie
 void Game::on_jouer_clicked()
 {
 
@@ -323,10 +326,11 @@ else
        p1.setHand(h1);
        p2.setHand(h2);
 
+
+       /* Affichage Paquet de carte pour chaque joueur */
+
         ui->paquet1->setPixmap(QPixmap(":/images/e.gif"));
          ui->paquet2->setPixmap(QPixmap(":/images/e.gif"));
-
-
 
         const QPixmap* pixmap1 = ui->paquet1->pixmap();
         const QPixmap* pixmap2 = ui->paquet2->pixmap();
@@ -363,6 +367,7 @@ else
 
 }
 
+// redémarrer application
 void Game::on_redemarer_clicked()
 {
    qApp->quit();
@@ -370,12 +375,13 @@ void Game::on_redemarer_clicked()
 }
 
 
+//couper la music
 void Game::on_mute_clicked()
 {
     son1->stop();
 }
 
-
+//Lancer la musique
 void Game::on_playMusic_clicked()
 {
     son1->play();
@@ -383,7 +389,7 @@ void Game::on_playMusic_clicked()
 
 
 
-
+// Affichage des cartes
 void Game::affichage(Card c1,Card c2,int i)
 {
     const QPixmap* pixmap1 = ui->cartejoueur1->pixmap();
