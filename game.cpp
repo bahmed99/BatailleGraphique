@@ -22,7 +22,7 @@ Game::Game(QWidget *parent)
 
 
         ui->tirer->setDisabled(true);
-        ui->jr1->setPlaceholderText("Taper votre nom pour jouer");
+
 
 
         son=new QSound(":/sound/b.wav");
@@ -306,10 +306,10 @@ else
                ui->j2->setStyleSheet(style);
 
        ui->j1->setText(fontTemplate.arg("white",ui->jr1->toPlainText()));
-       ui->j2->setText(fontTemplate.arg("white","Ordinateur"));
+       ui->j2->setText(fontTemplate.arg("white","Robot"));
        son1->play();
        p1.setPrenom(ui->jr1->toPlainText());
-       p2.setPrenom("Ordinateur");
+       p2.setPrenom("Robot");
 
        ui->jr1->deleteLater();
 
