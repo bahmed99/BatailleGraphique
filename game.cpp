@@ -25,11 +25,11 @@ Game::Game(QWidget *parent)
 
 
 
-        son=new QSound(":/sound/b.wav");
+        musiqueGangnat=new QSound(":/sound/b.wav");
 
-        son2=new QSound(":/sound/f.wav");
+        musiquePerdu=new QSound(":/sound/f.wav");
 
-        son1=new QSound(":/sound/a.wav");
+        musiqueDebutJeu=new QSound(":/sound/a.wav");
 
 
 }
@@ -42,6 +42,11 @@ Game::~Game()
 // Tirer des cartes
 void Game::on_tirer_clicked()
 {
+
+
+        ui->score1->setText(QString::number(p1.getHand().getHandPlayer().size()));
+        ui->score2->setText(QString::number(p2.getHand().getHandPlayer().size()));
+
 
        ui->resultatB->setText("") ;
        Hand h1=p1.getHand();
@@ -63,7 +68,7 @@ void Game::on_tirer_clicked()
         QString formatT=tr("<font color='%1'>%2<\font><br>");
         QString formatT1=tr("<font color='%1'>%2<\font>");
 
-       ui->Round->setText(QString::number(index));
+       ui->Round->setText(QString::number(round));
        ct1 = h1.getHandPlayer().top();
        h1.tirerCard();
        ct2 = h2.getHandPlayer().top();
@@ -83,14 +88,14 @@ void Game::on_tirer_clicked()
                    {
                        h1.setHandPlayer(aux);
                        ui->Resultat->setText(p1.getPrenom()+" a emporté cette manche");
-                       index++;
+                       round++;
                    }
 
       else if (ct1.comparer(ct2) ==2) // 2Ã©me joueur remporte la manche
                    {
                        h2.setHandPlayer(aux);
                        ui->Resultat->setText(p1.getPrenom()+" a perdu cette manche");
-                       index++;
+                       round++;
                    }
        else
        {
@@ -209,7 +214,7 @@ void Game::on_tirer_clicked()
                                    h1.setHandPlayer(aux);
 
                                    ui->Resultat->setText(p1.getPrenom()+" a emporté cette manche");
-                                   index++;
+                                   round++;
 
                                    testBataille = true;
                                }
@@ -218,7 +223,7 @@ void Game::on_tirer_clicked()
                                else if (ct5.comparer(ct6) == 2) {
                                    h2.setHandPlayer(aux);
                                    ui->Resultat->setText(p1.getPrenom()+" a perdu cette manche");
-                                   index++;
+                                   round++;
 
                                    testBataille = true;
                                }
@@ -251,8 +256,8 @@ void Game::on_tirer_clicked()
 
            ui->paquet2->setPixmap(QPixmap(""));
            ui->tirer->setDisabled(true);
-           son1->stop();
-           son2->play();
+           musiqueDebutJeu->stop();
+           musiquePerdu->play();
            QMessageBox::about(this,"Perdu","vous avez perdu");
 
 
@@ -264,15 +269,12 @@ void Game::on_tirer_clicked()
 
            ui->paquet1->setPixmap(QPixmap(""));
            ui->tirer->setDisabled(true);
-           son1->stop();
-           son->play();
+           musiqueDebutJeu->stop();
+           musiqueGangnat->play();
            QMessageBox::about(this,"Gagnant",p1.getPrenom()+" a gagné");
 
        }
 
-
-       ui->score1->setText(QString::number(p1.getHand().getHandPlayer().size()));
-       ui->score2->setText(QString::number(p2.getHand().getHandPlayer().size()));
 
 
 
@@ -307,7 +309,7 @@ else
 
        ui->j1->setText(fontTemplate.arg("white",ui->jr1->toPlainText()));
        ui->j2->setText(fontTemplate.arg("white","Robot"));
-       son1->play();
+       musiqueDebutJeu->play();
        p1.setPrenom(ui->jr1->toPlainText());
        p2.setPrenom("Robot");
 
@@ -315,8 +317,8 @@ else
 
 
 
-       srand((int)time(0));
-        Package pq;
+
+
         Hand h1,h2;
 
 
@@ -361,7 +363,7 @@ else
         ui->jouer->setDisabled(true);
         ui->score1->setText("26");
         ui->score2->setText("26");
-        index=1;
+        round=1;
 
 }
 
@@ -378,13 +380,13 @@ void Game::on_redemarer_clicked()
 //couper la music
 void Game::on_mute_clicked()
 {
-    son1->stop();
+    musiqueDebutJeu->stop();
 }
 
 //Lancer la musique
 void Game::on_playMusic_clicked()
 {
-    son1->play();
+   musiqueDebutJeu->play();
 }
 
 

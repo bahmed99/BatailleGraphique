@@ -47,8 +47,9 @@ private slots:
 private:
     Ui::Game *ui;
     Player p1,p2;
-    int index ; // indique le numéro de la manche
-    QSound *son,*son1,*son2;
+    int round ; // indique le numéro de la manche
+    QSound *musiqueGangnat,*musiqueDebutJeu,*musiquePerdu;
+    Package pq ;
 
 
 
