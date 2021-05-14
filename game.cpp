@@ -469,7 +469,7 @@ void Game::affichage(Card c1,Card c2,int i)
                                         pixmap->fill(Qt::transparent);
                                         QPainter *painter=new QPainter(pixmap);
                                         painter->drawPixmap(0, 0, 71, 96*(i-1), *pixmap1);
-                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c1.getValeur())+"h"));
+                                        painter->drawPixmap(0, 20*i, 71, 96, QPixmap(":/images/"+QString::number(c1.getValeur())+"d.gif"));
                                         painter->end();
                                         ui->cartejoueur1->setPixmap(*pixmap);
                 }
