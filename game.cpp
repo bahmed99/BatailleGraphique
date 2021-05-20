@@ -253,7 +253,8 @@ void Game::on_tirer_clicked()
 
        else if(p1.getHand().getHandPlayer().size()==0) {
 
-
+            ui->score1->setText("0");
+            ui->score1->setText("52");
            ui->paquet2->setPixmap(QPixmap(""));
            ui->tirer->setDisabled(true);
            musiqueDebutJeu->stop();
@@ -266,7 +267,8 @@ void Game::on_tirer_clicked()
 
        else if(p2.getHand().getHandPlayer().size()==0) {
 
-
+            ui->score2->setText("0");
+             ui->score2->setText("52");
            ui->paquet1->setPixmap(QPixmap(""));
            ui->tirer->setDisabled(true);
            musiqueDebutJeu->stop();
